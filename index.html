@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এডু-টিউব | জিয়াউদ্দিন স্কুল এন্ড কলেজ</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ytRed: '#FF0000',
+                        ytBg: '#F2F2F2',
+                        ytDark: '#0F0F0F'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* কাস্টম স্ক্রলবার ইউটিউবের মত */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #999; }
+        
+        body { background-color: #F2F2F2; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .truncate-2-lines {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+
+        /* কোড প্রটেকশনের জন্য সিলেক্ট করা বন্ধ */
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body class="no-select text-ytDark">
+
+    <!-- হেডার / নেভিগেশন বার -->
+    <header class="bg-white flex items-center justify-between px-4 py-2 sticky top-0 z-50 shadow-sm">
+        <div class="flex items-center gap-4">
+            <button class="p-2 hover:bg-gray-100 rounded-full md:hidden" onclick="toggleSidebar()">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="flex items-center gap-1 cursor-pointer" onclick="location.reload()">
+                <i class="fab fa-youtube text-ytRed text-3xl"></i>
+                <span class="text-xl font-bold tracking-tighter">এডু<span class="text-ytRed">টিউব</span></span>
+            </div>
+        </div>
+
+        <div class="hidden md:flex flex-1 max-w-2xl mx-8 items-center">
+            <div class="flex w-full border border-gray-300 rounded-full overflow-hidden bg-gray-50">
+                <input type="text" placeholder="শিক্ষামূলক ভিডিও খুঁজুন..." class="w-full px-4 py-2 bg-transparent outline-none">
+                <button class="px-5 bg-gray-100 border-l border-gray-300 hover:bg-gray-200">
+                    <i class="fas fa-search text-gray-600"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 md:gap-4">
+            <button onclick="openAdminModal()" class="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-full text-sm font-semibold transition">
+                <i class="fas fa-plus text-ytRed"></i> <span class="hidden md:block">ভিডিও যোগ করুন</span>
+            </button>
+            <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                M
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-[calc(100vh-60px)]">
+        <!-- সাইডবার -->
+        <aside id="sidebar" class="w-64 bg-white h-full overflow-y-auto hidden md:block flex-shrink-0 transition-all duration-300">
+            <div class="p-3">
+                <div class="hover:bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-4 cursor-pointer font-medium bg-gray-100">
+                    <i class="fas fa-home w-5 text-center"></i> মূল পাতা
+                </div>
+                <div class="hover:bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-4 cursor-pointer mt-1">
+                    <i class="fas fa-chart-line w-5 text-center"></i> অর্থনীতি ও বাণিজ্য
+                </div>
+                <div class="hover:bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-4 cursor-pointer mt-1">
+                    <i class="fas fa-laptop-code w-5 text-center"></i> আইসিটি ও এআই
+                </div>
+                <hr class="my-3 border-gray-200">
+                <h3 class="px-3 text-sm font-semibold text-gray-500 mb-2">পরামর্শক</h3>
+                <div class="px-3 flex items-center gap-3">
+                    <img src="https://ui-avatars.com/api/?name=Manjurul+Haque&background=0D8ABC&color=fff" class="w-8 h-8 rounded-full">
+                    <div class="text-sm">
+                        <p class="font-bold">মোঃ মঞ্জুরুল হক</p>
+                        <p class="text-xs text-gray-500">জিয়াউদ্দিন স্কুল এন্ড কলেজ</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- মূল কন্টেন্ট (ভিডিও গ্রিড) -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-ytBg">
+            <!-- ক্যাটাগরি চিপস -->
+            <div class="flex gap-3 overflow-x-auto pb-4 mb-4 scrollbar-hide">
+                <button class="whitespace-nowrap bg-black text-white px-3 py-1.5 rounded-lg text-sm font-medium">সবগুলো</button>
+                <button class="whitespace-nowrap bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium">নীতিগল্প</button>
+                <button class="whitespace-nowrap bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium">আইসিটি</button>
+                <button class="whitespace-nowrap bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium">অর্থনীতি</button>
+                <button class="whitespace-nowrap bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-lg text-sm font-medium">বিজ্ঞান</button>
+            </div>
+
+            <!-- গ্রিড -->
+            <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-x-4 md:gap-y-8">
+                <!-- ভিডিও কার্ডগুলো জাভাস্ক্রিপ্ট দিয়ে এখানে লোড হবে -->
+            </div>
+        </main>
+    </div>
+
+    <!-- ভিডিও প্লেয়ার মোডাল -->
+    <div id="playerModal" class="fixed inset-0 bg-black/90 z-[60] hidden flex flex-col">
+        <div class="p-4 flex justify-between items-center text-white bg-black">
+            <h2 id="playerTitle" class="text-lg font-bold">ভিডিও টাইটেল</h2>
+            <button onclick="closePlayer()" class="text-white hover:text-red-500 transition"><i class="fas fa-times text-2xl"></i></button>
+        </div>
+        <div class="flex-1 flex items-center justify-center p-4" id="playerContainer">
+            <!-- ভিডিও প্লেয়ার এখানে আসবে -->
+        </div>
+    </div>
+
+    <!-- অ্যাডমিন প্যানেল মোডাল (ভিডিও আপলোড) -->
+    <div id="adminModal" class="fixed inset-0 bg-black/60 z-[70] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+            <div class="bg-blue-600 p-4 text-white flex justify-between items-center">
+                <h2 class="text-lg font-bold"><i class="fas fa-upload mr-2"></i>নতুন ভিডিও যুক্ত করুন</h2>
+                <button onclick="closeAdminModal()" class="hover:text-gray-200"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <form id="uploadForm" class="p-5 space-y-4" onsubmit="handleUpload(event)">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">ভিডিওর শিরোনাম (Title)</label>
+                    <input type="text" id="vTitle" required class="w-full border p-2 rounded focus:outline-blue-500" placeholder="যেমন: এআই কী?">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold mb-1">ক্যাটাগরি</label>
+                    <select id="vCategory" class="w-full border p-2 rounded focus:outline-blue-500">
+                        <option value="আইসিটি">আইসিটি ও এআই</option>
+                        <option value="অর্থনীতি">অর্থনীতি</option>
+                        <option value="নীতিগল্প">নীতিগল্প</option>
+                        <option value="বিজ্ঞান">বিজ্ঞান</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1">ভিডিওর উৎস (Source)</label>
+                    <select id="vSourceType" class="w-full border p-2 rounded focus:outline-blue-500" onchange="toggleSourceInput()">
+                        <option value="youtube">ইউটিউব লিংক</option>
+                        <option value="link">গিটহাব / ডিরেক্ট লিংক (.mp4)</option>
+                        <option value="local">লোকাল ফাইল (ফোন থেকে)</option>
+                    </select>
+                </div>
+
+                <div id="urlInputGroup">
+                    <label class="block text-sm font-semibold mb-1">ভিডিও লিংক (URL)</label>
+                    <input type="text" id="vUrl" class="w-full border p-2 rounded focus:outline-blue-500" placeholder="https://...">
+                </div>
+
+                <div id="fileInputGroup" class="hidden">
+                    <label class="block text-sm font-semibold mb-1">ফাইল সিলেক্ট করুন</label>
+                    <input type="file" id="vFile" accept="video/mp4,video/x-m4v,video/*" class="w-full border p-1 rounded">
+                    <p class="text-xs text-red-500 mt-1">* লোকাল ফাইল শুধুমাত্র বর্তমান সেশনের জন্য কাজ করবে।</p>
+                </div>
+
+                <button type="submit" class="w-full bg-ytRed text-white font-bold py-2 rounded hover:bg-red-700 transition">
+                    যুক্ত করুন
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- কোড প্রটেকশন (রাইট ক্লিক ও ইনস্পেক্ট বন্ধ করা) ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) { return false; } // F12
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
+        };
+
+        // --- ইংরেজি সংখ্যাকে বাংলায় রূপান্তর ---
+        const enToBn = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+        function formatBn(num) {
+            let numStr = num.toLocaleString('en-US'); // ১,০০,০০০ স্টাইল
+            return numStr.replace(/[0-9]/g, w => enToBn[w]);
+        }
+
+        // --- ডেমো ডেটা (প্রাথমিক ভিডিও) ---
+        let videos = [
+            { id: 1, title: 'এআই (AI) কীভাবে কাজ করে? সহজে শিখি', category: 'আইসিটি', type: 'youtube', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', views: Math.floor(Math.random() * 900000) + 100001, date: '২ দিন আগে' },
+            { id: 2, title: 'অর্থনীতির মৌলিক ধারণা: সঞ্চয় ও বিনিয়োগ', category: 'অর্থনীতি', type: 'youtube', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', views: Math.floor(Math.random() * 900000) + 100001, date: '১ সপ্তাহ আগে' },
+            { id: 3, title: 'শিষ্টাচার: বড়দের সম্মান করা', category: 'নীতিগল্প', type: 'youtube', url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', views: Math.floor(Math.random() * 900000) + 100001, date: '৩ সপ্তাহ আগে' }
+        ];
+
+        // LocalStorage থেকে ভিডিও লোড করা (যদি থাকে)
+        const savedVideos = JSON.parse(localStorage.getItem('eduTubeVideos'));
+        if(savedVideos) {
+            videos = savedVideos;
+        }
+
+        // --- ভিডিও গ্রিড রেন্ডার করা ---
+        function renderVideos() {
+            const grid = document.getElementById('videoGrid');
+            grid.innerHTML = '';
+
+            videos.forEach((video, index) => {
+                // থাম্বনেইল জেনারেট (ইউটিউব লিংক হলে থাম্বনেইল, না হলে ডিফল্ট কালার)
+                let thumbBg = `bg-gradient-to-br from-blue-500 to-purple-600`;
+                let thumbIcon = `<i class="fas fa-play text-4xl text-white opacity-80"></i>`;
+                
+                if(video.type === 'youtube' && video.url.includes('youtube.com/embed/')) {
+                    let ytId = video.url.split('embed/')[1].split('?')[0];
+                    thumbBg = `bg-[url('https://img.youtube.com/vi/${ytId}/hqdefault.jpg')] bg-cover bg-center`;
+                    thumbIcon = ''; // ছবি থাকলে আইকন সরাবো
+                }
+
+                const cardHTML = `
+                    <div class="flex flex-col gap-2 cursor-pointer group" onclick="playVideo(${index})">
+                        <!-- Thumbnail -->
+                        <div class="relative w-full aspect-video rounded-xl overflow-hidden ${thumbBg} flex items-center justify-center">
+                            ${thumbIcon}
+                            <span class="absolute bottom-1 right-1 bg-black/80 text-white text-xs px-1.5 py-0.5 rounded font-medium">10:00</span>
+                        </div>
+                        <!-- Details -->
+                        <div class="flex gap-3 pr-6">
+                            <img src="https://ui-avatars.com/api/?name=MH&background=random" class="w-9 h-9 rounded-full mt-1 flex-shrink-0">
+                            <div class="flex flex-col">
+                                <h3 class="text-sm font-semibold text-ytDark truncate-2-lines group-hover:text-blue-600">${video.title}</h3>
+                                <p class="text-xs text-gray-500 mt-1 hover:text-gray-800">মঞ্জুরুল হক • ${video.category}</p>
+                                <p class="text-xs text-gray-500">${formatBn(video.views)} ভিউ • ${video.date}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        // --- ভিডিও প্লেয়ার লজিক ---
+        function playVideo(index) {
+            const video = videos[index];
+            document.getElementById('playerTitle').innerText = video.title;
+            const container = document.getElementById('playerContainer');
+            
+            if(video.type === 'youtube') {
+                // ইউটিউব এম্বেড লিংক তৈরি
+                let embedUrl = video.url;
+                if(video.url.includes('watch?v=')) {
+                    embedUrl = video.url.replace('watch?v=', 'embed/');
+                }
+                container.innerHTML = `<iframe class="w-full max-w-4xl aspect-video rounded-lg shadow-2xl" src="${embedUrl}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            } else {
+                // ডিরেক্ট লিংক বা লোকাল ফাইল
+                container.innerHTML = `<video class="w-full max-w-4xl aspect-video rounded-lg shadow-2xl bg-black" src="${video.url}" controls autoplay></video>`;
+            }
+            
+            document.getElementById('playerModal').classList.remove('hidden');
+        }
+
+        function closePlayer() {
+            document.getElementById('playerModal').classList.add('hidden');
+            document.getElementById('playerContainer').innerHTML = ''; // ভিডিও স্টপ করতে
+        }
+
+        // --- অ্যাডমিন প্যানেল লজিক ---
+        function openAdminModal() { document.getElementById('adminModal').classList.replace('hidden', 'flex'); }
+        function closeAdminModal() { document.getElementById('adminModal').classList.replace('flex', 'hidden'); }
+        
+        function toggleSourceInput() {
+            const type = document.getElementById('vSourceType').value;
+            if(type === 'local') {
+                document.getElementById('urlInputGroup').classList.add('hidden');
+                document.getElementById('fileInputGroup').classList.remove('hidden');
+            } else {
+                document.getElementById('urlInputGroup').classList.remove('hidden');
+                document.getElementById('fileInputGroup').classList.add('hidden');
+            }
+        }
+
+        function handleUpload(e) {
+            e.preventDefault();
+            const title = document.getElementById('vTitle').value;
+            const category = document.getElementById('vCategory').value;
+            const type = document.getElementById('vSourceType').value;
+            
+            let finalUrl = '';
+
+            if(type === 'local') {
+                const fileInput = document.getElementById('vFile');
+                if(fileInput.files.length > 0) {
+                    // লোকাল ফাইলের জন্য অবজেক্ট ইউআরএল তৈরি
+                    finalUrl = URL.createObjectURL(fileInput.files[0]);
+                } else {
+                    alert('দয়া করে একটি ভিডিও ফাইল নির্বাচন করুন!');
+                    return;
+                }
+            } else {
+                finalUrl = document.getElementById('vUrl').value;
+                if(!finalUrl) { alert('দয়া করে ভিডিও লিংক দিন!'); return; }
+            }
+
+            // নতুন ভিডিও অবজেক্ট তৈরি
+            const newVideo = {
+                id: Date.now(),
+                title: title,
+                category: category,
+                type: type === 'local' ? 'link' : 'youtube', // লোকালকে লিংক হিসেবে ট্রিট করবো প্লেয়ারের জন্য
+                url: finalUrl,
+                views: Math.floor(Math.random() * 900000) + 100001,
+                date: 'এইমাত্র আপলোড হয়েছে'
+            };
+
+            videos.unshift(newVideo); // শুরুতে যোগ করা
+            
+            // Local storage এ সেভ করা (লোকাল ফাইল ছাড়া, কারণ blob url রিফ্রেশ দিলে কাজ করে না)
+            if(type !== 'local') {
+                localStorage.setItem('eduTubeVideos', JSON.stringify(videos));
+            }
+
+            renderVideos();
+            closeAdminModal();
+            document.getElementById('uploadForm').reset();
+            alert('সফলভাবে ভিডিও যুক্ত করা হয়েছে!');
+        }
+
+        // সাইডবার টগল (মোবাইলের জন্য)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('absolute');
+            sidebar.classList.toggle('z-40');
+            sidebar.classList.toggle('shadow-xl');
+        }
+
+        // প্রাথমিক রেন্ডার
+        renderVideos();
+    </script>
+</body>
+</html>
+
