@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>এডু-টিউব | জিয়াউদ্দিন স্কুল এন্ড কলেজ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Baloo+Da+2:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ══════════════════════════════════════════
+   CSS VARIABLES & RESET
+══════════════════════════════════════════ */
+:root {
+  --red:        #e63946;
+  --red2:       #c1121f;
+  --blue:       #1565c0;
+  --blue2:      #0d47a1;
+  --green:      #2e7d32;
+  --bg:         #f0f2f5;
+  --card:       #ffffff;
+  --hdr:        #ffffff;
+  --border:     #e0e0e0;
+  --text:       #0f0f0f;
+  --muted:      #606060;
+  --chip-on:    #0f0f0f;
+  --chip-off:   #e5e5e5;
+  --sidebar-w:  240px;
+  --r:          12px;
+  --shadow:     0 2px 8px rgba(0,0,0,.10);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,.18);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+
+body{
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* scrollbar */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:#ccc;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:#999;}
+
+/* ══════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════ */
+#hdr{
+  position:sticky;top:0;z-index:100;
+  background:var(--hdr);
+  border-bottom:1px solid var(--border);
+  height:58px;
+  display:flex;align-items:center;
+  padding:0 14px;gap:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.07);
+}
+
+#menuBtn{
+  display:none;background:none;border:none;
+  cursor:pointer;font-size:20px;padding:6px;
+  border-radius:50%;transition:background .15s;
+}
+#menuBtn:hover{background:var(--bg);}
+
+.logo{
+  display:flex;align-items:center;gap:5px;
+  cursor:pointer;text-decoration:none;flex-shrink:0;
+}
+.logo i{color:var(--red);font-size:30px;}
+.logo-txt{
+  font-family:'Baloo Da 2',sans-serif;
+  font-size:21px;font-weight:800;letter-spacing:-.5px;
+}
+.logo-txt span{color:var(--red);}
+
+.search-wrap{
+  flex:1;max-width:540px;margin:0 auto;
+  display:flex;border:1.5px solid var(--border);
+  border-radius:40px;overflow:hidden;
+  background:#fafafa;transition:border-color .2s;
+}
+.search-wrap:focus-within{border-color:var(--blue);}
+.search-wrap input{
+  flex:1;padding:8px 16px;
+  background:transparent;border:none;outline:none;
+  font-family:'Hind Siliguri',sans-serif;font-size:14px;
+}
+.search-wrap button{
+  padding:8px 16px;background:#f0f0f0;
+  border:none;border-left:1.5px solid var(--border);
+  cursor:pointer;transition:background .15s;color:var(--muted);
+}
+.search-wrap button:hover{background:#e0e0e0;}
+
+.hdr-actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0;}
+
+.btn-add{
+  display:flex;align-items:center;gap:6px;
+  background:var(--bg);border:1.5px solid var(--border);
+  padding:7px 14px;border-radius:40px;
+  cursor:pointer;font-family:'Hind Siliguri',sans-serif;
+  font-size:13px;font-weight:600;transition:all .18s;
+  color:var(--text);white-space:nowrap;
+}
+.btn-add:hover{background:var(--border);}
+.btn-add i{color:var(--red);}
+
+.admin-orb{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;cursor:pointer;border:none;
+  transition:transform .2s,background .2s;
+  position:relative;
+}
+.admin-orb:hover{transform:scale(1.1);}
+.admin-orb.super{background:var(--red);}
+.admin-orb .crown-glow{
+  position:absolute;inset:-2px;border-radius:50%;
+  border:2px solid gold;animation:pulse-ring 2s infinite;
+  display:none;
+}
+.admin-orb.super .crown-glow{display:block;}
+@keyframes pulse-ring{
+  0%{transform:scale(1);opacity:.8;}
+  70%{transform:scale(1.25);opacity:0;}
+  100%{transform:scale(1.25);opacity:0;}
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+#layout{display:flex;height:calc(100vh - 58px);}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--hdr);overflow-y:auto;
+  padding:10px 0;
+  border-right:1px solid var(--border);
+  transition:transform .3s;
+}
+.s-item{
+  display:flex;align-items:center;gap:14px;
+  padding:10px 18px;cursor:pointer;
+  font-size:14px;font-weight:500;
+  border-radius:10px;margin:1px 8px;
+  transition:background .15s;
+}
+.s-item:hover{background:var(--bg);}
+.s-item.act{background:#e8e8e8;font-weight:700;}
+.s-item i{width:20px;text-align:center;color:var(--muted);font-size:15px;}
+.s-divider{border:none;border-top:1px solid var(--border);margin:8px 0;}
+.s-sec{padding:8px 20px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;}
+.teacher-box{
+  padding:10px 16px;display:flex;align-items:center;gap:10px;
+  border-radius:10px;margin:2px 8px;
+}
+.teacher-box img{width:36px;height:36px;border-radius:50%;border:2px solid var(--blue);}
+.t-name{font-size:13px;font-weight:700;}
+.t-inst{font-size:11px;color:var(--muted);}
+
+/* ── MAIN ── */
+#main{flex:1;overflow-y:auto;padding:14px 18px;}
+
+/* sync bar */
+.sync-bar{
+  display:flex;align-items:center;gap:10px;
+  background:#e8f5e9;border:1px solid #c8e6c9;
+  border-radius:10px;padding:9px 14px;
+  margin-bottom:12px;font-size:13px;
+  animation:slideDown .4s ease;
+}
+@keyframes slideDown{from{transform:translateY(-8px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.sync-bar i{color:var(--green);font-size:16px;}
+.sync-bar .sb-txt{flex:1;color:#1b5e20;font-weight:500;}
+.sync-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 14px;border-radius:20px;
+  background:var(--green);color:#fff;border:none;
+  font-size:12px;font-weight:700;cursor:pointer;
+  font-family:'Hind Siliguri',sans-serif;
+  transition:background .2s;
+}
+.sync-btn:hover{background:#1b5e20;}
+.sync-btn:disabled{background:#9e9e9e;cursor:default;}
+
+/* chips */
+.chips{
+  display:flex;gap:8px;overflow-x:auto;
+  padding-bottom:10px;margin-bottom:14px;
+  scrollbar-width:none;
+}
+.chips::-webkit-scrollbar{display:none;}
+.chip{
+  white-space:nowrap;padding:7px 14px;
+  border-radius:8px;font-size:13px;font-weight:600;
+  cursor:pointer;border:none;transition:all .15s;
+  font-family:'Hind Siliguri',sans-serif;
+  background:var(--chip-off);color:var(--text);
+}
+.chip.on{background:var(--chip-on);color:#fff;}
+.chip:hover:not(.on){background:#d5d5d5;}
+
+/* ── VIDEO GRID ── */
+#grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:16px 18px;
+}
+
+/* video card */
+.vcard{cursor:pointer;position:relative;}
+.thumb{
+  position:relative;aspect-ratio:16/9;
+  border-radius:var(--r));overflow:hidden;
+  background:#111;border-radius:var(--r);
+}
+.thumb img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .35s;display:block;
+}
+.vcard:hover .thumb img{transform:scale(1.05);}
+.thumb-ph{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#1565c0 0%,#6a1b9a 100%);
+}
+.thumb-ph i{font-size:34px;color:rgba(255,255,255,.5);}
+.thumb-overlay{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0);transition:background .2s;
+}
+.vcard:hover .thumb-overlay{background:rgba(0,0,0,.25);}
+.play-circle{
+  width:46px;height:46px;border-radius:50%;
+  background:rgba(255,255,255,.92);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.75);transition:all .22s;
+}
+.vcard:hover .play-circle{opacity:1;transform:scale(1);}
+.play-circle i{color:#111;font-size:17px;margin-left:3px;}
+
+/* card admin menu */
+.card-menu-wrap{position:absolute;top:6px;right:6px;z-index:5;}
+.card-dots{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,.72);color:#fff;border:none;
+  cursor:pointer;font-size:13px;
+  display:none;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.vcard:hover .card-dots{display:flex;}
+.card-dots:hover{background:rgba(0,0,0,.9);}
+.card-drop{
+  position:absolute;top:32px;right:0;
+  background:#fff;border-radius:10px;
+  box-shadow:var(--shadow-lg);
+  min-width:165px;overflow:hidden;
+  display:none;animation:popIn .15s ease;
+}
+@keyframes popIn{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+.card-drop.open{display:block;}
+.cd-item{
+  width:100%;text-align:left;padding:10px 14px;
+  background:none;border:none;cursor:pointer;
+  font-family:'Hind Siliguri',sans-serif;font-size:13px;
+  display:flex;align-items:center;gap:9px;
+  transition:background .12s;font-weight:500;
+}
+.cd-item:hover{background:var(--bg);}
+.cd-item.del{color:var(--red);}
+
+/* card info */
+.cinfo{display:flex;gap:10px;padding:10px 2px 4px;}
+.cavatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;margin-top:2px;}
+.cmeta h3{
+  font-size:13.5px;font-weight:600;line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+.cmeta p{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.4;}
+
+/* reactions */
+.creact{display:flex;gap:6px;padding:2px 2px 8px;align-items:center;}
+.rbtn{
+  display:flex;align-items:center;gap:4px;
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:20px;padding:4px 10px;
+  font-size:12px;cursor:pointer;
+  font-family:'Hind Siliguri',sans-serif;
+  transition:all .15s;font-weight:600;
+}
+.rbtn:hover{background:#fce4ec;border-color:#f48fb1;}
+.rbtn.loved{background:#fce4ec;color:#b71c1c;border-color:#ef9a9a;}
+.rbtn i{font-size:12px;}
+.sbtn{
+  margin-left:auto;background:none;border:none;
+  color:var(--muted);cursor:pointer;font-size:12px;
+  padding:4px 8px;border-radius:6px;
+  font-family:'Hind Siliguri',sans-serif;
+  display:flex;align-items:center;gap:5px;
+  transition:color .15s;font-weight:500;
+}
+.sbtn:hover{color:var(--blue);}
+
+/* empty */
+.empty-st{
+  grid-column:1/-1;text-align:center;
+  padding:60px 20px;color:var(--muted);
+}
+.empty-st i{font-size:52px;display:block;margin-bottom:14px;opacity:.3;}
+.empty-st p{font-size:15px;}
+
+/* ══════════════════════════════════════════
+   MODALS (shared)
+══════════════════════════════════════════ */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.65);
+  z-index:200;display:none;
+  align-items:center;justify-content:center;padding:16px;
+}
+.overlay.open{display:flex;}
+
+.modal{
+  background:#fff;border-radius:18px;
+  width:100%;max-width:480px;
+  overflow:hidden;box-shadow:var(--shadow-lg);
+  animation:modalIn .22s ease;
+}
+@keyframes modalIn{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+.mhdr{
+  padding:16px 20px;display:flex;align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.mhdr h2{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.mclose{background:none;border:none;cursor:pointer;font-size:19px;color:var(--muted);padding:4px;transition:color .15s;}
+.mclose:hover{color:var(--text);}
+.mbody{padding:18px 20px;}
+
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;}
+.field input,.field select,.field textarea{
+  width:100%;padding:9px 12px;
+  border:1.5px solid var(--border);border-radius:8px;
+  font-family:'Hind Siliguri',sans-serif;font-size:14px;
+  outline:none;transition:border-color .18s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);}
+.field input[type="file"]{padding:7px;}
+.fhint{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.55;}
+.fhint a{color:var(--blue);}
+
+.prog-wrap{background:var(--bg);border-radius:6px;height:8px;overflow:hidden;margin-top:6px;display:none;}
+.prog-bar{height:100%;background:var(--blue);width:0%;transition:width .25s;}
+#uStatus{font-size:12px;color:var(--muted);margin:5px 0 2px;}
+
+.btn-pri{
+  width:100%;padding:11px;border-radius:9px;
+  background:var(--red);color:#fff;border:none;
+  font-family:'Hind Siliguri',sans-serif;font-size:15px;
+  font-weight:700;cursor:pointer;transition:background .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-pri:hover{background:var(--red2);}
+.btn-pri:disabled{background:#bbb;cursor:default;}
+.btn-sec{
+  padding:9px 18px;border-radius:9px;
+  background:var(--bg);color:var(--text);
+  border:1.5px solid var(--border);
+  font-family:'Hind Siliguri',sans-serif;font-size:14px;
+  font-weight:600;cursor:pointer;transition:all .18s;
+}
+.btn-sec:hover{background:var(--border);}
+
+/* ══════════════════════════════════════════
+   PLAYER MODAL
+══════════════════════════════════════════ */
+#playerModal{
+  position:fixed;inset:0;background:#000;
+  z-index:300;display:none;flex-direction:column;
+}
+#playerModal.open{display:flex;}
+.phdr{
+  padding:11px 16px;display:flex;align-items:center;
+  gap:12px;background:rgba(0,0,0,.9);flex-shrink:0;
+}
+.phdr h2{color:#fff;font-size:15px;font-weight:600;flex:1;line-height:1.35;}
+.pclose{background:none;border:none;color:#fff;font-size:24px;cursor:pointer;padding:4px;transition:color .15s;}
+.pclose:hover{color:var(--red);}
+.pbody{
+  flex:1;display:flex;align-items:center;
+  justify-content:center;padding:12px;overflow:auto;
+}
+.pbody iframe,.pbody video{
+  width:100%;max-width:920px;
+  aspect-ratio:16/9;border:none;
+  border-radius:10px;
+}
+.pfoot{
+  padding:10px 16px;background:rgba(0,0,0,.85);
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+}
+.p-cat{color:#aaa;font-size:13px;flex:1;}
+.p-lov{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:20px;padding:6px 14px;
+  cursor:pointer;font-family:'Hind Siliguri',sans-serif;
+  font-size:13px;font-weight:600;transition:all .15s;
+}
+.p-lov:hover{background:rgba(255,255,255,.2);}
+.p-lov.loved{background:#c62828;border-color:#c62828;}
+.p-shr{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:20px;padding:6px 14px;
+  cursor:pointer;font-family:'Hind Siliguri',sans-serif;
+  font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:5px;transition:all .15s;
+}
+.p-shr:hover{background:rgba(255,255,255,.2);}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:#323232;color:#fff;padding:11px 22px;
+  border-radius:10px;font-size:13.5px;z-index:999;
+  opacity:0;pointer-events:none;transition:opacity .28s;
+  display:flex;align-items:center;gap:8px;
+  white-space:nowrap;box-shadow:var(--shadow-lg);
+}
+#toast.show{opacity:1;}
+#toast.err{background:#c62828;}
+
+/* ══════════════════════════════════════════
+   THUMB PREVIEW
+══════════════════════════════════════════ */
+.tprev{
+  width:100%;aspect-ratio:16/9;border-radius:8px;
+  object-fit:cover;background:#eee;display:none;margin-top:8px;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:768px){
+  #sidebar{
+    position:fixed;top:58px;left:0;
+    height:calc(100vh - 58px);z-index:150;
+    box-shadow:4px 0 20px rgba(0,0,0,.18);
+    transform:translateX(-100%);
+  }
+  #sidebar.open{transform:translateX(0);}
+  #menuBtn{display:block;}
+  .search-wrap{display:none;}
+  .btn-add span{display:none;}
+  #grid{grid-template-columns:1fr;}
+  #main{padding:10px;}
+}
+@media(min-width:1400px){
+  #grid{grid-template-columns:repeat(4,1fr);}
+}
+
+/* spin */
+.spin{animation:spinning 1s linear infinite;}
+@keyframes spinning{to{transform:rotate(360deg);}}
+
+/* no-select */
+.ns{user-select:none;-webkit-user-select:none;}
+</style>
+</head>
+<body class="ns">
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header id="hdr">
+  <button id="menuBtn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+  <a class="logo" onclick="filterCat('সব')">
+    <i class="fab fa-youtube"></i>
+    <span class="logo-txt">এডু<span>টিউব</span></span>
+  </a>
+
+  <div class="search-wrap">
+    <input type="text" id="searchQ" placeholder="শিক্ষামূলক ভিডিও খুঁজুন…" oninput="doSearch()">
+    <button onclick="doSearch()"><i class="fas fa-search"></i></button>
+  </div>
+
+  <div class="hdr-actions">
+    <button class="btn-add" onclick="openUpload()">
+      <i class="fas fa-plus"></i><span>ভিডিও যোগ করুন</span>
+    </button>
+    <button class="admin-orb" id="adminOrb" onclick="orbClick()">
+      <div class="crown-glow"></div>
+      <i class="fas fa-user" id="orbIco"></i>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════ LAYOUT ══════════════ -->
+<div id="layout">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="s-item act" onclick="filterCat('সব');closeSbMobile()">
+      <i class="fas fa-home"></i>মূল পাতা
+    </div>
+    <div class="s-item" onclick="filterCat('অর্থনীতি');closeSbMobile()">
+      <i class="fas fa-chart-line"></i>অর্থনীতি
+    </div>
+    <div class="s-item" onclick="filterCat('আইসিটি');closeSbMobile()">
+      <i class="fas fa-laptop-code"></i>আইসিটি ও এআই
+    </div>
+    <div class="s-item" onclick="filterCat('নীতিগল্প');closeSbMobile()">
+      <i class="fas fa-book-open"></i>নীতিগল্প
+    </div>
+    <div class="s-item" onclick="filterCat('বিজ্ঞান');closeSbMobile()">
+      <i class="fas fa-flask"></i>বিজ্ঞান
+    </div>
+    <div class="s-item" onclick="filterCat('গণিত');closeSbMobile()">
+      <i class="fas fa-calculator"></i>গণিত
+    </div>
+    <div class="s-item" onclick="filterCat('ইতিহাস');closeSbMobile()">
+      <i class="fas fa-landmark"></i>ইতিহাস
+    </div>
+    <hr class="s-divider">
+    <div class="s-sec">পরামর্শক</div>
+    <div class="teacher-box">
+      <img src="https://ui-avatars.com/api/?name=Manjurul+Haque&background=1565c0&color=fff" alt="">
+      <div>
+        <p class="t-name">মোঃ মঞ্জুরুল হক</p>
+        <p class="t-inst">জিয়াউদ্দিন স্কুল এন্ড কলেজ</p>
+      </div>
+    </div>
+    <hr class="s-divider">
+    <div class="s-item" onclick="openSyncCfg()">
+      <i class="fas fa-cog"></i>GitHub সেটিং
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- Sync bar -->
+    <div class="sync-bar" id="syncBar" style="display:none">
+      <i class="fab fa-github"></i>
+      <span class="sb-txt" id="sbTxt">GitHub থেকে লোড হচ্ছে…</span>
+      <button class="sync-btn" id="syncBtnEl" onclick="doSync()">
+        <i class="fas fa-sync-alt" id="syncIco"></i>সিঙ্ক করুন
+      </button>
+    </div>
+
+    <!-- Chips -->
+    <div class="chips" id="chips">
+      <button class="chip on" onclick="filterCat('সব')">সবগুলো</button>
+      <button class="chip" onclick="filterCat('অর্থনীতি')">অর্থনীতি</button>
+      <button class="chip" onclick="filterCat('আইসিটি')">আইসিটি</button>
+      <button class="chip" onclick="filterCat('নীতিগল্প')">নীতিগল্প</button>
+      <button class="chip" onclick="filterCat('বিজ্ঞান')">বিজ্ঞান</button>
+      <button class="chip" onclick="filterCat('গণিত')">গণিত</button>
+      <button class="chip" onclick="filterCat('ইতিহাস')">ইতিহাস</button>
+    </div>
+
+    <!-- Grid -->
+    <div id="grid"></div>
+
+  </main>
+</div>
+
+<!-- ══════════════ PLAYER ══════════════ -->
+<div id="playerModal">
+  <div class="phdr">
+    <h2 id="pTitle"></h2>
+    <button class="pclose" onclick="closePlayer()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="pbody" id="pBody"></div>
+  <div class="pfoot">
+    <span class="p-cat" id="pCat"></span>
+    <button class="p-lov" id="pLovBtn" onclick="playerLove()">
+      <i class="fas fa-heart"></i><span id="pLovN">০</span>
+    </button>
+    <button class="p-shr" onclick="playerShare()">
+      <i class="fas fa-share-alt"></i>শেয়ার
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ UPLOAD MODAL ══════════════ -->
+<div class="overlay" id="uploadModal">
+  <div class="modal">
+    <div class="mhdr">
+      <h2><i class="fas fa-upload" style="color:var(--red)"></i>নতুন ভিডিও যুক্ত করুন</h2>
+      <button class="mclose" onclick="closeUpload()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="mbody">
+      <div class="field">
+        <label>শিরোনাম *</label>
+        <input type="text" id="uTitle" placeholder="যেমন: এআই কীভাবে কাজ করে?">
+      </div>
+      <div class="field">
+        <label>ক্যাটাগরি</label>
+        <select id="uCat">
+          <option value="আইসিটি">আইসিটি ও এআই</option>
+          <option value="অর্থনীতি">অর্থনীতি</option>
+          <option value="নীতিগল্প">নীতিগল্প</option>
+          <option value="বিজ্ঞান">বিজ্ঞান</option>
+          <option value="গণিত">গণিত</option>
+          <option value="ইতিহাস">ইতিহাস</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>ভিডিও সোর্স</label>
+        <select id="uSrc" onchange="toggleSrc()">
+          <option value="youtube">ইউটিউব লিংক</option>
+          <option value="github">GitHub রেপোতে ফাইল আপলোড (PAT লাগবে)</option>
+          <option value="direct">ডিরেক্ট ভিডিও URL</option>
+        </select>
+      </div>
+      <div id="uUrlWrap" class="field">
+        <label id="uUrlLbl">ইউটিউব URL</label>
+        <input type="url" id="uUrl" placeholder="https://www.youtube.com/watch?v=…">
+      </div>
+      <div id="uFileWrap" class="field" style="display:none">
+        <label>ভিডিও ফাইল (.mp4, .webm…)</label>
+        <input type="file" id="uFile" accept="video/*" onchange="showFileSize()">
+        <p class="fhint" id="uFileHint"></p>
+      </div>
+      <div id="uPatWrap" class="field" style="display:none">
+        <label>GitHub PAT *</label>
+        <input type="password" id="uPat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <p class="fhint">
+          PAT একবার দিলে এই ডিভাইসে সুপার অ্যাডমিন হিসেবে সেভ থাকবে।<br>
+          <a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank">🔗 এখান থেকে PAT তৈরি করুন</a> (repo scope দরকার)
+        </p>
+      </div>
+      <div class="prog-wrap" id="upProg"><div class="prog-bar" id="upBar"></div></div>
+      <p id="uStatus"></p>
+      <button class="btn-pri" id="uBtn" onclick="doUpload()">
+        <i class="fas fa-cloud-upload-alt"></i>ভিডিও যুক্ত করুন
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ AUTH MODAL ══════════════ -->
+<div class="overlay" id="authModal">
+  <div class="modal" style="max-width:400px">
+    <div class="mhdr">
+      <h2><i class="fas fa-shield-alt" style="color:var(--red)"></i>সুপার অ্যাডমিন</h2>
+      <button class="mclose" onclick="closeAuth()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="mbody">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">
+        GitHub PAT দিয়ে লগইন করলে ভিডিও ডিলিট, এডিট ও থাম্বনেইল পরিবর্তন করতে পারবেন।
+      </p>
+      <div class="field">
+        <label>GitHub PAT</label>
+        <input type="password" id="aPat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <p class="fhint"><a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank">PAT তৈরি করুন</a> — repo scope দরকার।</p>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn-sec" onclick="doLogout()">লগআউট</button>
+        <button class="btn-pri" onclick="doLogin()" style="flex:1">
+          <i class="fas fa-sign-in-alt"></i>লগইন করুন
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ EDIT MODAL ══════════════ -->
+<div class="overlay" id="editModal">
+  <div class="modal">
+    <div class="mhdr">
+      <h2><i class="fas fa-pen" style="color:var(--blue)"></i>ভিডিও এডিট করুন</h2>
+      <button class="mclose" onclick="closeEdit()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="mbody">
+      <input type="hidden" id="eId">
+      <div class="field">
+        <label>শিরোনাম</label>
+        <input type="text" id="eTitle">
+      </div>
+      <div class="field">
+        <label>ক্যাটাগরি</label>
+        <select id="eCat">
+          <option value="আইসিটি">আইসিটি ও এআই</option>
+          <option value="অর্থনীতি">অর্থনীতি</option>
+          <option value="নীতিগল্প">নীতিগল্প</option>
+          <option value="বিজ্ঞান">বিজ্ঞান</option>
+          <option value="গণিত">গণিত</option>
+          <option value="ইতিহাস">ইতিহাস</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>থাম্বনেইল URL (ঐচ্ছিক)</label>
+        <input type="url" id="eThumbUrl" placeholder="https://…/thumb.jpg" oninput="prevThumbUrl()">
+        <img id="eThumbPrev" class="tprev" alt="">
+      </div>
+      <div class="field">
+        <label>থাম্বনেইল ফাইল আপলোড (GitHub)</label>
+        <input type="file" id="eThumbFile" accept="image/*" onchange="uploadThumbFile()">
+        <p class="fhint" id="eThumbSt"></p>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;">
+        <button class="btn-sec" onclick="closeEdit()">বাতিল</button>
+        <button class="btn-pri" onclick="saveEdit()" style="flex:1">
+          <i class="fas fa-save"></i>সেভ করুন
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SYNC CFG MODAL ══════════════ -->
+<div class="overlay" id="syncModal">
+  <div class="modal" style="max-width:420px">
+    <div class="mhdr">
+      <h2><i class="fab fa-github"></i>GitHub সিঙ্ক সেটিং</h2>
+      <button class="mclose" onclick="closeSyncCfg()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="mbody">
+      <div class="field">
+        <label>GitHub Username</label>
+        <input type="text" id="cfgOwner" placeholder="economics-2">
+      </div>
+      <div class="field">
+        <label>Repository নাম</label>
+        <input type="text" id="cfgRepo" placeholder="EduTube">
+      </div>
+      <div class="field">
+        <label>ভিডিও ফোল্ডার (খালি রাখলে root)</label>
+        <input type="text" id="cfgFolder" placeholder="videos">
+      </div>
+      <p class="fhint" style="margin-bottom:14px;">
+        রেপোতে <code>edutube-data.json</code> ফাইলে ভিডিও ডেটা রাখা হয়।
+        ভিডিও ফোল্ডারে .mp4/.webm ফাইল থাকলে স্বয়ংক্রিয়ভাবে যুক্ত হবে।
+      </p>
+      <button class="btn-pri" onclick="saveSyncCfg()">
+        <i class="fas fa-save"></i>সেভ ও সিঙ্ক করুন
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ TOAST ══════════════ -->
+<div id="toast"><i class="fas fa-check-circle"></i><span id="toastTxt"></span></div>
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+/* ──────────────────────────────────────────
+   CONSTANTS & STATE
+────────────────────────────────────────── */
+const LS_VIDS   = 'et_videos_v3';
+const LS_CFG    = 'et_gh_config';
+const LS_PAT    = 'et_super_pat';
+const LS_REACT  = 'et_reactions';
+const LS_VIEWS  = 'et_views';
+
+let videos      = [];
+let reactions   = {};
+let curCat      = 'সব';
+let curVidId    = null;
+let isSA        = false;          // super admin flag
+let ghCfg       = { owner:'economics-2', repo:'EduTube', folder:'videos' };
+
+/* Bengali digits */
+const BD = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+const toBn  = n => String(Math.max(0,Math.floor(n))).replace(/[0-9]/g,d=>BD[d]);
+const escH  = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* ──────────────────────────────────────────
+   BOOT
+────────────────────────────────────────── */
+function boot(){
+  const sc = localStorage.getItem(LS_CFG);   if(sc) ghCfg = JSON.parse(sc);
+  const sr = localStorage.getItem(LS_REACT);  if(sr) reactions = JSON.parse(sr);
+  const sv = localStorage.getItem(LS_VIDS);   if(sv) videos = JSON.parse(sv);
+  const sp = localStorage.getItem(LS_PAT);    if(sp){ isSA = true; refreshOrbUI(); }
+
+  if(ghCfg.owner && ghCfg.repo){
+    const bar = document.getElementById('syncBar');
+    bar.style.display = 'flex';
+    document.getElementById('sbTxt').textContent =
+      `${ghCfg.owner}/${ghCfg.repo} — অটো সিঙ্ক চালু`;
+    doSync();
+  } else {
+    renderGrid();
+  }
+  checkUrlParam();
+}
+
+/* ──────────────────────────────────────────
+   GITHUB HELPERS
+────────────────────────────────────────── */
+function ghHeaders(pat){
+  const h = {'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+  const t = pat || localStorage.getItem(LS_PAT);
+  if(t) h['Authorization'] = `token ${t}`;
+  return h;
+}
+function ghBase(){ return `https://api.github.com/repos/${ghCfg.owner}/${ghCfg.repo}`; }
+
+async function ghGetFile(path){
+  const r = await fetch(`${ghBase()}/contents/${path}`,{headers:ghHeaders()});
+  if(!r.ok) return null;
+  const d = await r.json();
+  return { content: JSON.parse(atob(d.content.replace(/\n/g,''))), sha: d.sha };
+}
+
+async function ghPutFile(path, content, message, sha){
+  const pat = localStorage.getItem(LS_PAT);
+  if(!pat) throw new Error('PAT নেই');
+  const b64 = btoa(unescape(encodeURIComponent(
+    typeof content === 'string' ? content : JSON.stringify(content, null, 2)
+  )));
+  const body = { message, content: b64, ...(sha?{sha}:{}) };
+  const r = await fetch(`${ghBase()}/contents/${path}`,{
+    method:'PUT', headers:ghHeaders(pat), body:JSON.stringify(body)
+  });
+  if(!r.ok){ const e=await r.json(); throw new Error(e.message||'PUT failed'); }
+  return await r.json();
+}
+
+async function ghBinaryPut(path, base64raw, message){
+  const pat = localStorage.getItem(LS_PAT);
+  if(!pat) throw new Error('PAT নেই');
+  // Check sha
+  let sha = null;
+  try{
+    const c = await fetch(`${ghBase()}/contents/${path}`,{headers:ghHeaders()});
+    if(c.ok){ const d=await c.json(); sha=d.sha; }
+  }catch{}
+  const body = { message, content: base64raw, ...(sha?{sha}:{}) };
+  const r = await fetch(`${ghBase()}/contents/${path}`,{
+    method:'PUT', headers:ghHeaders(pat), body:JSON.stringify(body)
+  });
+  if(!r.ok){ const e=await r.json(); throw new Error(e.message||'Upload failed'); }
+  const d = await r.json();
+  return d.content.download_url;
+}
+
+async function ghListFolder(){
+  const p = ghCfg.folder||'';
+  try{
+    const r = await fetch(`${ghBase()}/contents/${p}`,{headers:ghHeaders()});
+    if(!r.ok) return [];
+    const arr = await r.json();
+    if(!Array.isArray(arr)) return [];
+    return arr.filter(f=>/\.(mp4|webm|mkv|mov|avi|m4v)$/i.test(f.name));
+  }catch{ return []; }
+}
+
+/* Save metadata to repo */
+async function saveMetaToGH(vids){
+  if(!localStorage.getItem(LS_PAT)) return;
+  try{
+    const ex = await ghGetFile('edutube-data.json');
+    await ghPutFile(
+      'edutube-data.json',
+      vids,
+      'EduTube: মেটাডেটা আপডেট',
+      ex ? ex.sha : undefined
+    );
+  }catch(e){ console.warn('meta save fail:',e.message); }
+}
+
+/* ──────────────────────────────────────────
+   SYNC
+────────────────────────────────────────── */
+async function doSync(){
+  const btn = document.getElementById('syncBtnEl');
+  const ico = document.getElementById('syncIco');
+  const txt = document.getElementById('sbTxt');
+  btn.disabled = true;
+  ico.classList.add('spin');
+  txt.textContent = 'সিঙ্ক হচ্ছে…';
+
+  try{
+    /* 1. load edutube-data.json */
+    const metaFile = await ghGetFile('edutube-data.json');
+    let metaVids = metaFile ? metaFile.content : [];
+    if(!Array.isArray(metaVids)) metaVids = [];
+
+    /* 2. list raw video files */
+    const rawFiles = await ghListFolder();
+    rawFiles.forEach(f=>{
+      const already = metaVids.some(v=>v.rawPath===f.path||v.url===f.download_url);
+      if(!already){
+        const nm = decodeURIComponent(f.name.replace(/\.[^.]+$/,''));
+        metaVids.push({
+          id:'gh_'+f.sha.slice(0,10),
+          title:nm, category:'আইসিটি',
+          type:'direct', url:f.download_url,
+          rawPath:f.path, thumbnail:'',
+          views:0, love:0,
+          date:todayStr(), fromGH:true
+        });
+      }
+    });
+
+    /* 3. merge: keep local-only + prefer GH for shared ids */
+    const ghIds = new Set(metaVids.map(v=>v.id));
+    const localOnly = videos.filter(v=>!v.fromGH && !ghIds.has(v.id));
+    videos = [...metaVids, ...localOnly];
+    saveLocal();
+    renderGrid();
+    txt.textContent = `${ghCfg.owner}/${ghCfg.repo} — সিঙ্ক সম্পন্ন (${videos.length}টি)`;
+    toast('GitHub সিঙ্ক সম্পন্ন ✅');
+  }catch(e){
+    txt.textContent = 'সিঙ্ক ব্যর্থ: '+e.message;
+    toast('সিঙ্ক ব্যর্থ: '+e.message,'err');
+  }
+  btn.disabled = false;
+  ico.classList.remove('spin');
+}
+
+/* ──────────────────────────────────────────
+   RENDER
+────────────────────────────────────────── */
+function renderGrid(list){
+  list = list || getVisible();
+  const g = document.getElementById('grid');
+  g.innerHTML = '';
+  if(!list.length){
+    g.innerHTML = `<div class="empty-st"><i class="fas fa-video-slash"></i><p>কোনো ভিডিও পাওয়া যায়নি</p></div>`;
+    return;
+  }
+  list.forEach(v=>{
+    const r = reactions[v.id] || {love:v.love||0,userLoved:false};
+    const loved = r.userLoved;
+    const loveN = r.love||0;
+
+    /* thumb */
+    let thumbHTML = '';
+    if(v.thumbnail){
+      thumbHTML = `<img src="${escH(v.thumbnail)}" alt="" loading="lazy"
+        onerror="this.parentElement.innerHTML='<div class=thumb-ph><i class=fas fa-film></i></div>'">`;
+    } else if(v.type==='youtube'){
+      const ytId = ytExtract(v.url);
+      if(ytId){
+        thumbHTML = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg"
+          alt="" loading="lazy"
+          onerror="this.parentElement.innerHTML='<div class=thumb-ph><i class=fas fa-film></i></div>'">`;
+      }
+    }
+    if(!thumbHTML){
+      // For direct/local vids: canvas auto-thumb is done lazily after render
+      thumbHTML = `<div class="thumb-ph" id="tph_${v.id}"><i class="fas fa-film"></i></div>`;
+    }
+
+    const adminMenu = isSA ? `
+      <div class="card-menu-wrap">
+        <button class="card-dots" onclick="event.stopPropagation();toggleDrop('drop_${v.id}')">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div class="card-drop" id="drop_${v.id}">
+          <button class="cd-item" onclick="event.stopPropagation();openEdit('${v.id}')">
+            <i class="fas fa-edit" style="color:var(--blue)"></i>এডিট করুন
+          </button>
+          <button class="cd-item" onclick="event.stopPropagation();openEdit('${v.id}',true)">
+            <i class="fas fa-image" style="color:var(--green)"></i>থাম্বনেইল
+          </button>
+          <button class="cd-item del" onclick="event.stopPropagation();doDelete('${v.id}')">
+            <i class="fas fa-trash"></i>ডিলিট করুন
+          </button>
+        </div>
+      </div>` : '';
+
+    const card = document.createElement('div');
+    card.className = 'vcard';
+    card.innerHTML = `
+      <div class="thumb" onclick="playVideo('${v.id}')">
+        ${thumbHTML}
+        <div class="thumb-overlay">
+          <div class="play-circle"><i class="fas fa-play"></i></div>
+        </div>
+        ${adminMenu}
+      </div>
+      <div class="cinfo">
+        <img class="cavatar"
+          src="https://ui-avatars.com/api/?name=MH&background=1565c0&color=fff"
+          alt="">
+        <div class="cmeta">
+          <h3>${escH(v.title)}</h3>
+          <p>মঞ্জুরুল হক • ${escH(v.category)}</p>
+          <p>${toBn(v.views||0)} ভিউ • ${escH(v.date||'')}</p>
+        </div>
+      </div>
+      <div class="creact">
+        <button class="rbtn${loved?' loved':''}" onclick="toggleLove('${v.id}')">
+          <i class="fas fa-heart"></i>${toBn(loveN)}
+        </button>
+        <button class="sbtn" onclick="shareVid('${v.id}')">
+          <i class="fas fa-share-alt"></i>শেয়ার
+        </button>
+      </div>`;
+    g.appendChild(card);
+
+    /* auto canvas thumb for direct/local videos */
+    if(!v.thumbnail && (v.type==='direct'||v.type==='link')){
+      genCanvasThumb(v.id, v.url);
+    }
+  });
+}
+
+/* Auto canvas thumbnail from video */
+function genCanvasThumb(id, url){
+  if(!url || url.startsWith('blob:')) return;
+  const vid = document.createElement('video');
+  vid.crossOrigin = 'anonymous';
+  vid.src = url;
+  vid.currentTime = 2;
+  vid.muted = true;
+  vid.addEventListener('seeked',()=>{
+    try{
+      const c = document.createElement('canvas');
+      c.width=320;c.height=180;
+      c.getContext('2d').drawImage(vid,0,0,320,180);
+      const dataUrl = c.toDataURL('image/jpeg',.8);
+      const ph = document.getElementById('tph_'+id);
+      if(ph){ ph.outerHTML=`<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover">`; }
+      /* cache thumb locally */
+      const v = videos.find(x=>x.id===id);
+      if(v && !v.thumbnail){ v._canvasThumb = dataUrl; }
+    }catch{}
+  },{once:true});
+  vid.load();
+}
+
+function getVisible(){
+  let list = [...videos];
+  if(curCat!=='সব') list = list.filter(v=>v.category===curCat);
+  const q = (document.getElementById('searchQ')?.value||'').toLowerCase().trim();
+  if(q) list = list.filter(v=>
+    v.title.toLowerCase().includes(q)||v.category.toLowerCase().includes(q)
+  );
+  return list;
+}
+
+/* ──────────────────────────────────────────
+   FILTER / SEARCH
+────────────────────────────────────────── */
+function filterCat(cat){
+  curCat = cat;
+  document.querySelectorAll('.chip').forEach(c=>{
+    const label = c.textContent.trim();
+    c.classList.toggle('on',
+      (cat==='সব' && label==='সবগুলো') || label===cat
+    );
+  });
+  document.querySelectorAll('.s-item').forEach(s=>s.classList.remove('act'));
+  renderGrid();
+}
+function doSearch(){ renderGrid(); }
+
+/* ──────────────────────────────────────────
+   PLAY
+────────────────────────────────────────── */
+function playVideo(id){
+  const v = videos.find(x=>x.id==id);
+  if(!v) return;
+  curVidId = id;
+  document.getElementById('pTitle').textContent = v.title;
+  document.getElementById('pCat').textContent = '📁 '+v.category;
+
+  const r = reactions[id]||{love:v.love||0,userLoved:false};
+  document.getElementById('pLovN').textContent = toBn(r.love||0);
+  document.getElementById('pLovBtn').classList.toggle('loved',r.userLoved);
+
+  const body = document.getElementById('pBody');
+  const ytId = ytExtract(v.url);
+  if(v.type==='youtube'||ytId){
+    body.innerHTML=`<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0"
+      allow="autoplay;encrypted-media" allowfullscreen></iframe>`;
+  } else {
+    body.innerHTML=`<video src="${escH(v.url)}" controls autoplay style="background:#000"></video>`;
+  }
+
+  /* view count */
+  v.views = (v.views||0)+1;
+  saveLocal();
+
+  document.getElementById('playerModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closePlayer(){
+  document.getElementById('playerModal').classList.remove('open');
+  document.getElementById('pBody').innerHTML='';
+  document.body.style.overflow='';
+  curVidId=null;
+  renderGrid();
+}
+function checkUrlParam(){
+  const p = new URLSearchParams(location.search).get('v');
+  if(p) setTimeout(()=>playVideo(p),600);
+}
+
+/* ──────────────────────────────────────────
+   REACTIONS
+────────────────────────────────────────── */
+function toggleLove(id){
+  const v = videos.find(x=>x.id==id);
+  if(!reactions[id]) reactions[id] = {love:v?.love||0,userLoved:false};
+  reactions[id].userLoved = !reactions[id].userLoved;
+  reactions[id].love += reactions[id].userLoved?1:-1;
+  if(reactions[id].love<0) reactions[id].love=0;
+  localStorage.setItem(LS_REACT,JSON.stringify(reactions));
+  renderGrid();
+}
+function playerLove(){
+  if(!curVidId) return;
+  toggleLove(curVidId);
+  const r=reactions[curVidId];
+  document.getElementById('pLovN').textContent=toBn(r.love);
+  document.getElementById('pLovBtn').classList.toggle('loved',r.userLoved);
+}
+function shareVid(id){
+  const v=videos.find(x=>x.id==id);
+  if(!v) return;
+  const url = location.origin+location.pathname+'?v='+id;
+  if(navigator.share){navigator.share({title:v.title,url});}
+  else navigator.clipboard.writeText(url).then(()=>toast('লিংক কপি হয়েছে! 🔗'));
+}
+function playerShare(){ if(curVidId) shareVid(curVidId); }
+
+/* ──────────────────────────────────────────
+   UPLOAD MODAL
+────────────────────────────────────────── */
+function openUpload(){ document.getElementById('uploadModal').classList.add('open'); }
+function closeUpload(){
+  document.getElementById('uploadModal').classList.remove('open');
+  document.getElementById('uStatus').textContent='';
+  document.getElementById('upProg').style.display='none';
+  document.getElementById('upBar').style.width='0%';
+  document.getElementById('uBtn').disabled=false;
+}
+function toggleSrc(){
+  const s=document.getElementById('uSrc').value;
+  document.getElementById('uUrlWrap').style.display = s==='github'?'none':'';
+  document.getElementById('uFileWrap').style.display = s==='github'?'':'none';
+  document.getElementById('uPatWrap').style.display  = s==='github'?'':'none';
+  if(s==='youtube') document.getElementById('uUrlLbl').textContent='ইউটিউব URL';
+  else document.getElementById('uUrlLbl').textContent='ভিডিও URL';
+}
+function showFileSize(){
+  const f=document.getElementById('uFile').files[0];
+  if(f) document.getElementById('uFileHint').textContent=
+    `সাইজ: ${(f.size/1024/1024).toFixed(1)} MB`;
+}
+
+async function doUpload(){
+  const title=(document.getElementById('uTitle').value||'').trim();
+  const cat=document.getElementById('uCat').value;
+  const src=document.getElementById('uSrc').value;
+  const btn=document.getElementById('uBtn');
+  if(!title){toast('শিরোনাম দিন!','err');return;}
+
+  let url='', type='youtube';
+
+  if(src==='github'){
+    const file=document.getElementById('uFile').files[0];
+    let pat=document.getElementById('uPat').value.trim()||localStorage.getItem(LS_PAT);
+    if(!file){toast('ফাইল নির্বাচন করুন!','err');return;}
+    if(!pat){toast('PAT দিন!','err');return;}
+    localStorage.setItem(LS_PAT,pat);
+    isSA=true; refreshOrbUI();
+
+    btn.disabled=true;
+    document.getElementById('upProg').style.display='block';
+    document.getElementById('uStatus').textContent='ফাইল পড়া হচ্ছে…';
+
+    try{
+      const b64=await toB64(file,p=>{
+        document.getElementById('upBar').style.width=(p*50)+'%';
+        document.getElementById('uStatus').textContent=`পড়া: ${Math.round(p*50)}%`;
+      });
+      document.getElementById('uStatus').textContent='GitHub-এ আপলোড হচ্ছে…';
+      const folder=ghCfg.folder||'videos';
+      const path=`${folder}/${Date.now()}_${file.name}`;
+      url=await ghBinaryPut(path,b64,'EduTube: '+file.name);
+      document.getElementById('upBar').style.width='100%';
+      document.getElementById('uStatus').textContent='আপলোড সম্পন্ন!';
+      type='direct';
+    }catch(e){
+      toast('আপলোড ব্যর্থ: '+e.message,'err');
+      btn.disabled=false; return;
+    }
+  } else {
+    url=(document.getElementById('uUrl').value||'').trim();
+    if(!url){toast('URL দিন!','err');return;}
+    type=src==='youtube'?'youtube':'direct';
+  }
+
+  const nv={
+    id:'v_'+Date.now(),title,category:cat,
+    type,url,thumbnail:'',
+    views:0,love:0,date:todayStr(),
+    fromGH:src==='github'
+  };
+  videos.unshift(nv);
+  saveLocal();
+  if(isSA) saveMetaToGH(videos.filter(v=>v.fromGH||v.type!=='direct'||v.fromGH));
+  renderGrid();
+  closeUpload();
+  btn.disabled=false;
+  toast('ভিডিও যুক্ত হয়েছে ✅');
+}
+
+/* ──────────────────────────────────────────
+   ADMIN AUTH
+────────────────────────────────────────── */
+function orbClick(){
+  if(isSA){ if(confirm('লগআউট করতে চান?')) doLogout(); }
+  else openAuth();
+}
+function openAuth(){ document.getElementById('authModal').classList.add('open'); }
+function closeAuth(){ document.getElementById('authModal').classList.remove('open'); }
+
+async function doLogin(){
+  const pat=(document.getElementById('aPat').value||'').trim();
+  if(!pat){toast('PAT দিন!','err');return;}
+  toast('যাচাই হচ্ছে…');
+  try{
+    const r=await fetch('https://api.github.com/user',{
+      headers:{'Authorization':'token '+pat}
+    });
+    if(r.ok){
+      const u=await r.json();
+      localStorage.setItem(LS_PAT,pat);
+      isSA=true; refreshOrbUI();
+      closeAuth();
+      renderGrid();
+      toast(`সুপার অ্যাডমিন: ${u.login} 👑`);
+    } else { toast('PAT সঠিক নয়!','err'); }
+  }catch{ toast('নেটওয়ার্ক ত্রুটি!','err'); }
+}
+function doLogout(){
+  localStorage.removeItem(LS_PAT);
+  isSA=false; refreshOrbUI();
+  renderGrid();
+  toast('লগআউট হয়েছে।');
+}
+function refreshOrbUI(){
+  const o=document.getElementById('adminOrb');
+  const i=document.getElementById('orbIco');
+  if(isSA){
+    o.classList.add('super');
+    i.className='fas fa-crown';
+    o.title='সুপার অ্যাডমিন (ক্লিক = লগআউট)';
+  } else {
+    o.classList.remove('super');
+    i.className='fas fa-user';
+    o.title='সুপার অ্যাডমিন লগইন';
+  }
+}
+
+/* ──────────────────────────────────────────
+   CARD DROPDOWN
+────────────────────────────────────────── */
+function toggleDrop(id){
+  document.querySelectorAll('.card-drop').forEach(d=>{
+    if(d.id!==id) d.classList.remove('open');
+  });
+  document.getElementById(id)?.classList.toggle('open');
+}
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.card-drop').forEach(d=>d.classList.remove('open'));
+});
+
+/* ──────────────────────────────────────────
+   EDIT MODAL
+────────────────────────────────────────── */
+function openEdit(id,thumbOnly=false){
+  if(!isSA){toast('সুপার অ্যাডমিন প্রয়োজন!','err');return;}
+  const v=videos.find(x=>x.id==id);
+  if(!v) return;
+  document.getElementById('eId').value=id;
+  document.getElementById('eTitle').value=v.title;
+  document.getElementById('eCat').value=v.category;
+  document.getElementById('eThumbUrl').value=v.thumbnail||'';
+  document.getElementById('eThumbSt').textContent='';
+  const p=document.getElementById('eThumbPrev');
+  if(v.thumbnail){p.src=v.thumbnail;p.style.display='block';}
+  else p.style.display='none';
+  document.getElementById('editModal').classList.add('open');
+}
+function closeEdit(){ document.getElementById('editModal').classList.remove('open'); }
+function prevThumbUrl(){
+  const u=document.getElementById('eThumbUrl').value;
+  const p=document.getElementById('eThumbPrev');
+  if(u){p.src=u;p.style.display='block';}
+  else p.style.display='none';
+}
+async function uploadThumbFile(){
+  if(!isSA) return;
+  const file=document.getElementById('eThumbFile').files[0];
+  if(!file) return;
+  const st=document.getElementById('eThumbSt');
+  st.textContent='আপলোড হচ্ছে…';
+  try{
+    const b64=await toB64(file);
+    const path=`thumbnails/${Date.now()}_${file.name}`;
+    const url=await ghBinaryPut(path,b64,'EduTube thumb: '+file.name);
+    document.getElementById('eThumbUrl').value=url;
+    prevThumbUrl();
+    st.textContent='থাম্বনেইল আপলোড সম্পন্ন ✅';
+  }catch(e){ st.textContent='ব্যর্থ: '+e.message; }
+}
+async function saveEdit(){
+  if(!isSA){toast('সুপার অ্যাডমিন প্রয়োজন!','err');return;}
+  const id=document.getElementById('eId').value;
+  const v=videos.find(x=>x.id==id);
+  if(!v) return;
+  v.title=(document.getElementById('eTitle').value||v.title).trim();
+  v.category=document.getElementById('eCat').value;
+  v.thumbnail=(document.getElementById('eThumbUrl').value||'').trim();
+  saveLocal();
+  if(isSA) saveMetaToGH(videos.filter(x=>x.fromGH));
+  renderGrid();
+  closeEdit();
+  toast('আপডেট হয়েছে ✅');
+}
+
+/* ──────────────────────────────────────────
+   DELETE
+────────────────────────────────────────── */
+async function doDelete(id){
+  if(!isSA){toast('সুপার অ্যাডমিন প্রয়োজন!','err');return;}
+  const v=videos.find(x=>x.id==id);
+  if(!v||!confirm(`"${v.title}" ডিলিট করতে চান?`)) return;
+  videos=videos.filter(x=>x.id!=id);
+  delete reactions[id];
+  localStorage.setItem(LS_REACT,JSON.stringify(reactions));
+  saveLocal();
+  if(isSA) saveMetaToGH(videos.filter(x=>x.fromGH));
+  renderGrid();
+  toast('ভিডিও ডিলিট হয়েছে।');
+}
+
+/* ──────────────────────────────────────────
+   SYNC CFG MODAL
+────────────────────────────────────────── */
+function openSyncCfg(){
+  document.getElementById('cfgOwner').value=ghCfg.owner||'';
+  document.getElementById('cfgRepo').value=ghCfg.repo||'';
+  document.getElementById('cfgFolder').value=ghCfg.folder||'videos';
+  document.getElementById('syncModal').classList.add('open');
+}
+function closeSyncCfg(){ document.getElementById('syncModal').classList.remove('open'); }
+function saveSyncCfg(){
+  ghCfg.owner=(document.getElementById('cfgOwner').value||'').trim();
+  ghCfg.repo=(document.getElementById('cfgRepo').value||'').trim();
+  ghCfg.folder=(document.getElementById('cfgFolder').value||'videos').trim();
+  localStorage.setItem(LS_CFG,JSON.stringify(ghCfg));
+  closeSyncCfg();
+  if(ghCfg.owner&&ghCfg.repo){
+    document.getElementById('syncBar').style.display='flex';
+    doSync();
+  }
+  toast('কনফিগ সেভ হয়েছে!');
+}
+
+/* ──────────────────────────────────────────
+   SIDEBAR
+────────────────────────────────────────── */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+function closeSbMobile(){
+  if(window.innerWidth<768) document.getElementById('sidebar').classList.remove('open');
+}
+
+/* ──────────────────────────────────────────
+   HELPERS
+────────────────────────────────────────── */
+function saveLocal(){ localStorage.setItem(LS_VIDS,JSON.stringify(videos)); }
+
+function todayStr(){
+  const d=new Date();
+  return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+}
+function ytExtract(url){
+  if(!url) return null;
+  const m=url.match(/(?:youtube\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return m?m[1]:null;
+}
+function toB64(file,onProg){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    if(onProg) r.onprogress=e=>{ if(e.lengthComputable) onProg(e.loaded/e.total); };
+    r.onload=()=>res(r.result.split(',')[1]);
+    r.onerror=rej;
+    r.readAsDataURL(file);
+  });
+}
+
+let _toastTimer;
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  document.getElementById('toastTxt').textContent=msg;
+  t.className=type==='err'?'show err':'show';
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ──────────────────────────────────────────
+   DEMO VIDEOS (shown only if no saved data)
+────────────────────────────────────────── */
+const DEMO=[
+  {id:'demo_1',title:'এআই (AI) কীভাবে কাজ করে? সহজে শিখি',
+    category:'আইসিটি',type:'youtube',
+    url:'https://www.youtube.com/watch?v=mJeNghZXtMo',
+    thumbnail:'',views:124500,love:340,date:'২ দিন আগে',fromGH:false},
+  {id:'demo_2',title:'অর্থনীতির মৌলিক ধারণা: সঞ্চয় ও বিনিয়োগ',
+    category:'অর্থনীতি',type:'youtube',
+    url:'https://www.youtube.com/watch?v=PHe0bXAIuk0',
+    thumbnail:'',views:87600,love:210,date:'১ সপ্তাহ আগে',fromGH:false},
+  {id:'demo_3',title:'শিষ্টাচার: বড়দের সম্মান করা',
+    category:'নীতিগল্প',type:'youtube',
+    url:'https://www.youtube.com/watch?v=lXMskKTw3Bc',
+    thumbnail:'',views:56200,love:189,date:'৩ সপ্তাহ আগে',fromGH:false},
+];
+
+/* ──────────────────────────────────────────
+   BOOT
+────────────────────────────────────────── */
+(function(){
+  const sc=localStorage.getItem(LS_CFG); if(sc) ghCfg=JSON.parse(sc);
+  const sr=localStorage.getItem(LS_REACT); if(sr) reactions=JSON.parse(sr);
+  const sp=localStorage.getItem(LS_PAT); if(sp){isSA=true;refreshOrbUI();}
+  const sv=localStorage.getItem(LS_VIDS);
+  if(sv){
+    const parsed=JSON.parse(sv);
+    videos=parsed.length?parsed:DEMO;
+  } else {
+    videos=[...DEMO];
+  }
+
+  if(ghCfg.owner&&ghCfg.repo){
+    document.getElementById('syncBar').style.display='flex';
+    document.getElementById('sbTxt').textContent=
+      `${ghCfg.owner}/${ghCfg.repo} — অটো সিঙ্ক চালু`;
+    doSync();
+  } else {
+    renderGrid();
+  }
+  checkUrlParam();
+})();
+</script>
+</body>
+</html>
