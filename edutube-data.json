@@ -1,0 +1,50 @@
+[
+  {
+    "id": "v_1773770550670",
+    "title": "dancing Android",
+    "category": "আইসিটি",
+    "type": "direct",
+    "url": "https://raw.githubusercontent.com/Economics-2/EduTube/gh-pages/videos/1773770546217_grok-video-c1edfcf3-da9a-4d15-8cf6-2283b4d153ba.mp4",
+    "thumbnail": "",
+    "views": 0,
+    "love": 0,
+    "date": "18/3/2026",
+    "fromGH": true
+  },
+  {
+    "id": "demo_1",
+    "title": "এআই (AI) কীভাবে কাজ করে? সহজে শিখি",
+    "category": "আইসিটি",
+    "type": "youtube",
+    "url": "https://www.youtube.com/watch?v=mJeNghZXtMo",
+    "thumbnail": "",
+    "views": 124500,
+    "love": 340,
+    "date": "২ দিন আগে",
+    "fromGH": false
+  },
+  {
+    "id": "demo_2",
+    "title": "অর্থনীতির মৌলিক ধারণা: সঞ্চয় ও বিনিয়োগ",
+    "category": "অর্থনীতি",
+    "type": "youtube",
+    "url": "https://www.youtube.com/watch?v=PHe0bXAIuk0",
+    "thumbnail": "",
+    "views": 87600,
+    "love": 210,
+    "date": "১ সপ্তাহ আগে",
+    "fromGH": false
+  },
+  {
+    "id": "demo_3",
+    "title": "শিষ্টাচার: বড়দের সম্মান করা",
+    "category": "নীতিগল্প",
+    "type": "youtube",
+    "url": "https://www.youtube.com/watch?v=lXMskKTw3Bc",
+    "thumbnail": "",
+    "views": 56200,
+    "love": 189,
+    "date": "৩ সপ্তাহ আগে",
+    "fromGH": false
+  }
+]
